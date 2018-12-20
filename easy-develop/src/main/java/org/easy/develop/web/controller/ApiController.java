@@ -1,7 +1,8 @@
 package org.easy.develop.web.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
-
+import java.util.List;
 import org.easy.develop.common.domain.DevApi;
 import org.easy.develop.web.base.WebModel;
 import org.easy.develop.web.base.WebModelBuilder;
@@ -27,11 +28,11 @@ public class ApiController {
 		devApi.setId(id);
 		devApi.setApiName("listApi");
 		devApi.setReturnType("WebModel");
-		devApi.setParams(null);
+		devApi.setParams(Long.toString(id));
 		devApi.setDescription("返回所api列表");
 		devApi.setAuthor("administrator");
 		devApi.setGmtCreate(new Date());
-		devApi.setIsEnabled((byte) 0);
+		devApi.setIsEnabled((byte) 1);
 		
 		WebModel webModel = new WebModelBuilder()
 								.buildSuccssfulModel(devApi);
@@ -49,14 +50,29 @@ public class ApiController {
 		devApi.setId(1L);
 		devApi.setApiName("listApi");
 		devApi.setReturnType("WebModel");
-		devApi.setParams(null);
+		devApi.setParams("1");
 		devApi.setDescription("返回所api列表");
 		devApi.setAuthor("administrator");
 		devApi.setGmtCreate(new Date());
-		devApi.setIsEnabled((byte) 0);
+		devApi.setIsEnabled((byte) 1);
+		
+		DevApi devApi2 = new DevApi();
+		devApi2.setId(1L);
+		devApi2.setApiName("gete");
+		devApi2.setReturnType("WebModel");
+		devApi2.setParams("2");
+		devApi2.setDescription("返回所api列表");
+		devApi2.setAuthor("administrator");
+		devApi2.setGmtCreate(new Date());
+		devApi2.setIsEnabled((byte) 1);
+		
+		List<DevApi> devApis = new ArrayList<>();
+		devApis.add(devApi);
+		devApis.add(devApi2);
 		
 		WebModel webModel = new WebModelBuilder()
-								.buildSuccssfulModel(devApi);
+				.buildSuccssfulModel(devApis);
+		
 		/*webModel = new WebModelBuilder()
 						.registNewStatus("200", "success", true)
 						.retData(devApi)

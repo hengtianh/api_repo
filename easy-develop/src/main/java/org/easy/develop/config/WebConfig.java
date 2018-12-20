@@ -19,7 +19,6 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter4;
-import com.fasterxml.jackson.databind.deser.BuilderBasedDeserializer;
 
 @Configuration
 @EnableWebMvc
@@ -52,8 +51,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		converter.setSupportedMediaTypes(supportedMediaTypes);
 		FastJsonConfig fastJsonConfig = new FastJsonConfig();
 		fastJsonConfig.setCharset(default_charset);
-		fastJsonConfig.setDateFormat("yyyy-MM-dd HH:mm:ss");
-		fastJsonConfig.setSerializerFeatures(SerializerFeature.WriteDateUseDateFormat);
+		//fastJsonConfig.setSerializerFeatures(SerializerFeature.WriteMapNullValue);
 		converter.setFastJsonConfig(fastJsonConfig);
 		return converter;
 	}

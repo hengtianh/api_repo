@@ -2,6 +2,8 @@ package org.easy.develop.common.domain;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class DevApi {
     private Long id;
 
@@ -17,8 +19,10 @@ public class DevApi {
 
     private String author;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date gmtCreate;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date gmtModified;
 
     public Long getId() {
