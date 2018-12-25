@@ -96,4 +96,12 @@ public class DevApi {
     public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
     }
+
+	@Override
+	public String toString() {
+		return "DevApi [id=" + id + ", apiName=" + apiName + ", returnType=" + returnType + ", params=" + params
+				+ ", description=" + description + ", isEnabled=" + isEnabled + ", author=" + author + ", gmtCreate="
+				+ gmtCreate + ", gmtModified=" + gmtModified + "]";
+	}
+    
 }

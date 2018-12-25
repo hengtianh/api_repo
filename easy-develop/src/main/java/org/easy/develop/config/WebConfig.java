@@ -3,22 +3,20 @@ package org.easy.develop.config;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
-
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter4;
 
 @Configuration
 @EnableWebMvc
@@ -47,6 +45,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
 		List<MediaType> supportedMediaTypes = new ArrayList<MediaType>();
 		supportedMediaTypes.add(MediaType.TEXT_HTML);
+		supportedMediaTypes.add(MediaType.APPLICATION_JSON);
 		supportedMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
 		converter.setSupportedMediaTypes(supportedMediaTypes);
 		FastJsonConfig fastJsonConfig = new FastJsonConfig();
@@ -54,6 +53,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		//fastJsonConfig.setSerializerFeatures(SerializerFeature.WriteMapNullValue);
 		converter.setFastJsonConfig(fastJsonConfig);
 		return converter;
+	}
+	
+	@Bean
+	public MultipartResolver multipartResolver() {
+		return new StandardServletMultipartResolver();
 	}
 
 	@Override

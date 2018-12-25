@@ -1,29 +1,42 @@
 package org.easy.develop.web.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.easy.develop.common.domain.DevApi;
 import org.easy.develop.web.base.WebModel;
 import org.easy.develop.web.base.WebModelBuilder;
+import org.easy.develop.web.exception.FileUploadException;
+import org.easy.develop.web.exception.NotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/apiDev")
 public class ApiController {
 	
-	@GetMapping()
-	public String home() {
-		return "home";
+	@PostMapping("/apiUpdate")
+	public WebModel updateApi(@RequestBody DevApi apiForm) {
+		// , emulateJSON
+		System.out.println(apiForm.toString());
+		return new WebModelBuilder().buildSuccssfulModel(null);
+	}
+	
+	@PostMapping("/apiAdd")
+	public WebModel addApi(@RequestBody DevApi apiForm, MultipartFile file) throws Exception {
+		uploadFile(file, "aaa");
+		return new WebModelBuilder().buildSuccssfulModel(null);
 	}
 	
 	@GetMapping("/api/{id}")
-	@ResponseBody
-	public WebModel getApi(@PathVariable long id) {
+	public WebModel getApi(@PathVariable long id) throws Exception {
 		DevApi devApi = new DevApi();
 		devApi.setId(id);
 		devApi.setApiName("listApi");
@@ -33,6 +46,12 @@ public class ApiController {
 		devApi.setAuthor("administrator");
 		devApi.setGmtCreate(new Date());
 		devApi.setIsEnabled((byte) 1);
+		
+		devApi = id < 1L ? devApi : null;
+		
+		if (devApi == null) {
+			throw new NotFoundException("devApi id: " + id + "not found");
+		}
 		
 		WebModel webModel = new WebModelBuilder()
 								.buildSuccssfulModel(devApi);
@@ -44,7 +63,6 @@ public class ApiController {
 	}
 	
 	@GetMapping("/apis")
-	@ResponseBody
 	public WebModel listApi() {
 		DevApi devApi = new DevApi();
 		devApi.setId(1L);
@@ -78,6 +96,31 @@ public class ApiController {
 						.retData(devApi)
 						.build();*/
 		return webModel;
+	}
+	
+	/**
+	 * 上传文件接口
+	 * @param multipartFile
+	 * @param filename
+	 * @throws FileUploadException
+	 */
+	private void uploadFile(MultipartFile multipartFile, String filename) throws FileUploadException {
+		String originalFilename = multipartFile.getOriginalFilename();
+		String suffix = originalFilename.substring(originalFilename.lastIndexOf('.'));
+		String newFilename = filename + suffix;
+		String uploadPath = "url/";
+		File dest = new File(uploadPath + newFilename);
+		try {
+			multipartFile.transferTo(dest);
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new FileUploadException("failed to upload file: '" + originalFilename + "'");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new FileUploadException("failed to upload file: '" + originalFilename + "'");
+		}
 	}
 	
 }

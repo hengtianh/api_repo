@@ -1,13 +1,21 @@
 package org.easy.develop.config;
 
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletRegistration.Dynamic;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
- * 基于servlet3.0,使用javaConfig配置容器
+ *  基于servlet3.0,使用javaConfig配置容器
  * @author Administrator
  *
  */
 public class ApiRepoWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+
+	@Override
+	protected void customizeRegistration(Dynamic registration) {
+		// TODO 注册基于servlet 3.0 的文件上传处理器参数
+		registration.setMultipartConfig(new MultipartConfigElement("/temp/upload/"));
+	}
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
