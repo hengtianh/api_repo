@@ -45,6 +45,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
 		List<MediaType> supportedMediaTypes = new ArrayList<MediaType>();
 		supportedMediaTypes.add(MediaType.TEXT_HTML);
+		supportedMediaTypes.add(MediaType.MULTIPART_FORM_DATA);
 		supportedMediaTypes.add(MediaType.APPLICATION_JSON);
 		supportedMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
 		converter.setSupportedMediaTypes(supportedMediaTypes);

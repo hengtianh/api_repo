@@ -1,9 +1,16 @@
 package org.easy.develop.web.base;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(description = "接口返回结果对象")
 public class WebModel {
 
+	@ApiModelProperty("返回码")
 	public String ret_code;
+	@ApiModelProperty("返回状态描述")
 	public String ret_msg;
+	@ApiModelProperty("返回业务数据")
 	public Object ret_data;
 
 	protected WebModel() {

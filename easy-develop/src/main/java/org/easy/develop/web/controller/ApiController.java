@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import org.easy.develop.common.domain.DevApi;
 import org.easy.develop.web.base.WebModel;
 import org.easy.develop.web.base.WebModelBuilder;
@@ -18,23 +19,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api
 @RestController
 @RequestMapping("/apiDev")
 public class ApiController {
 	
+	@ApiOperation(value = "更新api接口信息")
 	@PostMapping("/apiUpdate")
 	public WebModel updateApi(@RequestBody DevApi apiForm) {
 		// , emulateJSON
-		System.out.println(apiForm.toString());
 		return new WebModelBuilder().buildSuccssfulModel(null);
 	}
 	
+	@ApiOperation(value = "新增api接口信息")
 	@PostMapping("/apiAdd")
-	public WebModel addApi(@RequestBody DevApi apiForm, MultipartFile file) throws Exception {
-		uploadFile(file, "aaa");
-		return new WebModelBuilder().buildSuccssfulModel(null);
+	public WebModel addApi(DevApi apiForm, MultipartFile[] files) throws Exception {
+		uploadFile(files[0], "aaa");
+		apiForm.setApiName("success add and upload file");
+		return new WebModelBuilder().buildSuccssfulModel(apiForm);
 	}
 	
+	@ApiOperation(value = "获得单个api接口信息")
 	@GetMapping("/api/{id}")
 	public WebModel getApi(@PathVariable long id) throws Exception {
 		DevApi devApi = new DevApi();
@@ -47,10 +55,10 @@ public class ApiController {
 		devApi.setGmtCreate(new Date());
 		devApi.setIsEnabled((byte) 1);
 		
-		devApi = id < 1L ? devApi : null;
+		devApi = id > 1L ? devApi : null;
 		
 		if (devApi == null) {
-			throw new NotFoundException("devApi id: " + id + "not found");
+			throw new NotFoundException("devApi id: " + id + " not found");
 		}
 		
 		WebModel webModel = new WebModelBuilder()
@@ -62,6 +70,7 @@ public class ApiController {
 		return webModel;
 	}
 	
+	@ApiOperation(value = "获得api接口信息列表")
 	@GetMapping("/apis")
 	public WebModel listApi() {
 		DevApi devApi = new DevApi();
@@ -99,7 +108,7 @@ public class ApiController {
 	}
 	
 	/**
-	 * 上传文件接口
+	 * 文件上传接口，按指定文件名保存文件
 	 * @param multipartFile
 	 * @param filename
 	 * @throws FileUploadException
@@ -108,7 +117,7 @@ public class ApiController {
 		String originalFilename = multipartFile.getOriginalFilename();
 		String suffix = originalFilename.substring(originalFilename.lastIndexOf('.'));
 		String newFilename = filename + suffix;
-		String uploadPath = "url/";
+		String uploadPath = "d:/upload/";
 		File dest = new File(uploadPath + newFilename);
 		try {
 			multipartFile.transferTo(dest);

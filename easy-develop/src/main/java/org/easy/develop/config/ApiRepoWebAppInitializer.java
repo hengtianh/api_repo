@@ -14,7 +14,7 @@ public class ApiRepoWebAppInitializer extends AbstractAnnotationConfigDispatcher
 	@Override
 	protected void customizeRegistration(Dynamic registration) {
 		// TODO 注册基于servlet 3.0 的文件上传处理器参数
-		registration.setMultipartConfig(new MultipartConfigElement("/temp/upload/"));
+		registration.setMultipartConfig(new MultipartConfigElement("d:/upload/temp/"));
 	}
 
 	@Override
@@ -26,7 +26,7 @@ public class ApiRepoWebAppInitializer extends AbstractAnnotationConfigDispatcher
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
 		// TODO 配置Dispatcher上下文的配置类
-		return new Class[] {WebConfig.class, AopConfig.class};
+		return new Class[] {WebConfig.class, AopConfig.class, Swagger2Config.class};
 	}
 
 	@Override

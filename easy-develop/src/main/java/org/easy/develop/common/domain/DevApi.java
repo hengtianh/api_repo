@@ -4,6 +4,9 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import io.swagger.annotations.ApiModel;
+
+@ApiModel(description = "api接口信息model类")
 public class DevApi {
     private Long id;
 
