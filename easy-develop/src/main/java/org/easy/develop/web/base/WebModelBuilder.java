@@ -8,7 +8,7 @@ import java.util.Map;
  * @author Administrator
  *
  */
-public class WebModelBuilder extends WebModel {
+public class WebModelBuilder {
 	/**
 	 * 定义返回状态和返回信息
 	 */
@@ -21,7 +21,9 @@ public class WebModelBuilder extends WebModel {
 	private static final String ERR_MSG = "ERROR";
 	private static final String BADSERVER_MSG = "BADSERVER";
 	
-	private WebModel webModel;
+	private String ret_code;
+	private String ret_msg;
+	private Object ret_data;
 	
 	private static Map<String, String> defaultRetStatusMap;
 	
@@ -35,10 +37,6 @@ public class WebModelBuilder extends WebModel {
 		defaultRetStatusMap.put(BADSERVER, BADSERVER_MSG);
 	}
 
-	public WebModelBuilder() {
-		webModel = new WebModel();
-	}
-	
 	public WebModel buildErrModel() {
 		return buildRetStatus(ERR, ERR_MSG)
 				.retData(null)
@@ -65,22 +63,22 @@ public class WebModelBuilder extends WebModel {
 	}
 
 	private WebModelBuilder retCode(String ret_code) {
-		webModel.setRet_code(ret_code);
+		this.ret_code = ret_code;
 		return this;
 	}
 
 	private WebModelBuilder retMsg(String ret_msg) {
-		webModel.setRet_msg(ret_msg);
+		this.ret_msg = ret_msg;
 		return this;
 	}
 
 	public WebModelBuilder retData(Object data) {
-		webModel.setRet_data(data);
+		this.ret_data = data;
 		return this;
 	}
 
 	public WebModel build() {
-		return this.webModel;
+		return new WebModel(ret_code, ret_msg, ret_data);
 	}
 	
 	public WebModelBuilder registNewStatus(String ret_code, String ret_msg, boolean override) {
@@ -114,7 +112,5 @@ public class WebModelBuilder extends WebModel {
 		}
 		return defaultRetStatusMap.get(ret_code);
 	}
-	
-	
 
 }

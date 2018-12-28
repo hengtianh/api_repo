@@ -26,7 +26,7 @@ public class ApiRepoWebAppInitializer extends AbstractAnnotationConfigDispatcher
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
 		// TODO 配置Dispatcher上下文的配置类
-		return new Class[] {WebConfig.class, AopConfig.class, Swagger2Config.class};
+		return new Class[] {WebConfig.class};
 	}
 
 	@Override

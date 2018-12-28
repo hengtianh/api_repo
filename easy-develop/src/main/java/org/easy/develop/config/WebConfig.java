@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
@@ -21,6 +22,7 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 @Configuration
 @EnableWebMvc
 @ComponentScan("org.easy.develop.web")
+@Import({AopConfig.class, Swagger2Config.class})
 public class WebConfig extends WebMvcConfigurerAdapter {
 
 	private Charset default_charset = Charset.forName("UTF-8");
@@ -66,4 +68,5 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		// TODO 使用默认的 servlet 处理静态资源
 		configurer.enable();
 	}
+	
 }

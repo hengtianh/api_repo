@@ -7,24 +7,15 @@ import io.swagger.annotations.ApiModelProperty;
 public class WebModel {
 
 	@ApiModelProperty("返回码")
-	public String ret_code;
+	private String ret_code;
 	@ApiModelProperty("返回状态描述")
-	public String ret_msg;
+	private String ret_msg;
 	@ApiModelProperty("返回业务数据")
-	public Object ret_data;
+	private Object ret_data;
 
-	protected WebModel() {
-	}
-
-	public void setRet_code(String ret_code) {
+	public WebModel(String ret_code, String ret_msg, Object ret_data) {
 		this.ret_code = ret_code;
-	}
-
-	public void setRet_msg(String ret_msg) {
 		this.ret_msg = ret_msg;
-	}
-
-	public void setRet_data(Object ret_data) {
 		this.ret_data = ret_data;
 	}
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.easy.develop.dao.DevApiMapper">
-  <resultMap id="BaseResultMap" type="org.easy.develop.domain.DevApi">
+  <resultMap id="BaseResultMap" type="org.easy.develop.common.domain.DevApi">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="api_name" jdbcType="VARCHAR" property="apiName" />
     <result column="return_type" jdbcType="VARCHAR" property="returnType" />
@@ -73,7 +73,7 @@
   <sql id="Base_Column_List">
     id, api_name, return_type, params, description, is_enabled, author, gmt_create, gmt_modified
   </sql>
-  <select id="selectByExample" parameterType="org.easy.develop.domain.DevApiExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="org.easy.develop.common.domain.DevApiExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -97,13 +97,13 @@
     delete from dev_api
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="org.easy.develop.domain.DevApiExample">
+  <delete id="deleteByExample" parameterType="org.easy.develop.common.domain.DevApiExample">
     delete from dev_api
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="org.easy.develop.domain.DevApi">
+  <insert id="insert" parameterType="org.easy.develop.common.domain.DevApi">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -114,7 +114,7 @@
       #{description,jdbcType=VARCHAR}, #{isEnabled,jdbcType=TINYINT}, #{author,jdbcType=VARCHAR}, 
       #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="org.easy.develop.domain.DevApi">
+  <insert id="insertSelective" parameterType="org.easy.develop.common.domain.DevApi">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -172,7 +172,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.easy.develop.domain.DevApiExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="org.easy.develop.common.domain.DevApiExample" resultType="java.lang.Long">
     select count(*) from dev_api
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -228,7 +228,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.easy.develop.domain.DevApi">
+  <update id="updateByPrimaryKeySelective" parameterType="org.easy.develop.common.domain.DevApi">
     update dev_api
     <set>
       <if test="apiName != null">
@@ -258,7 +258,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.easy.develop.domain.DevApi">
+  <update id="updateByPrimaryKey" parameterType="org.easy.develop.common.domain.DevApi">
     update dev_api
     set api_name = #{apiName,jdbcType=VARCHAR},
       return_type = #{returnType,jdbcType=VARCHAR},
